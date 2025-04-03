@@ -1,0 +1,20 @@
+{
+	"name": "create_external_file_format",
+	"properties": {
+		"folder": {
+			"name": "dwh_setup"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL FILE FORMAT ParquetFormat\nWITH (\n    FORMAT_TYPE = PARQUET\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
