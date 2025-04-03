@@ -1,0 +1,35 @@
+{
+	"name": "CSV_bronze_silver",
+	"properties": {
+		"description": "Copy the csv files from bronze to silver, add columns with the data source and time. Store the data as parquet files",
+		"activities": [
+			{
+				"name": "csv_bronze_silver",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Dataflow2",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-04-02T11:32:35Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

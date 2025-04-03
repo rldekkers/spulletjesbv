@@ -1,0 +1,17 @@
+{
+	"name": "dimCustomer",
+	"properties": {
+		"content": {
+			"query": "-- This is auto-generated code\nSELECT\n    *\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.Customers.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [c]\nJOIN\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.CustomerCategories.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [cat]\nON c.CustomerCategoryID = cat.CustomerCategoryId",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}

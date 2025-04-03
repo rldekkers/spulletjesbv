@@ -1,0 +1,21 @@
+{
+	"name": "ApplicationPeopleSilver",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapse-analytics-spul-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "silver/csv/ApplicationPeopleSilver",
+				"fileSystem": "fsspul1234"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}
