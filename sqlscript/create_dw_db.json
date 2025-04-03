@@ -2,6 +2,9 @@
 	"name": "create_dw_db",
 	"properties": {
 		"description": "Script to create the datawarehouse database",
+		"folder": {
+			"name": "dwh_setup"
+		},
 		"content": {
 			"query": "CREATE DATABASE [Spulletjes_DW]",
 			"metadata": {
