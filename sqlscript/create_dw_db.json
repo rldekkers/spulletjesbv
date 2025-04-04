@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "Script to create the datawarehouse database",
 		"folder": {
-			"name": "dwh_setup"
+			"name": "datawarehouse_DDL_scripts"
 		},
 		"content": {
 			"query": "CREATE DATABASE [Spulletjes_DW]",

@@ -2,7 +2,7 @@
 	"name": "create_external_file_format",
 	"properties": {
 		"folder": {
-			"name": "dwh_setup"
+			"name": "datawarehouse_DDL_scripts"
 		},
 		"content": {
 			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL FILE FORMAT ParquetFormat\nWITH (\n    FORMAT_TYPE = PARQUET\n)",

@@ -1,0 +1,20 @@
+{
+	"name": "create_view_FactSales",
+	"properties": {
+		"folder": {
+			"name": "datawarehouse_DDL_scripts"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\nGO\n\nCREATE VIEW vw_FactSales AS\nSELECT\n    [ol].[OrderLineID]\n    , [ol].[OrderID]\n    , [ol].[StockItemID]\n    , [ol].[Description]\n    , [ol].[PackageTypeID]\n    , [ol].[Quantity]\n    , [ol].[UnitPrice]\n    , [ol].[TaxRate]\n    , [ol].[PickedQuantity]\n    , [ol].[PickingCompletedWhen] AS [ol_PickingCompletedWhen]\n    , [ol].[LastEditedBy] AS [ol_LastEditedBy]\n    , [ol].[LastEditedWhen] AS [ol_LastEditedWhen]\n\n    , [o].[CustomerID]\n    , [o].[SalespersonPersonID]\n    -- , [o].[PickedByPersonID]\n    -- , [o].[ContactPersonID]\n    -- , [o].[BackorderOrderID]\n    , [o].[OrderDate]\n    -- , [o].[ExpectedDeliveryDate]\n    -- , [o].[CustomerPurchaseOrderNumber]\n    -- , [o].[IsUndersupplyBackordered]\n    -- , [o].[Comments]\n    -- , [o].[DeliveryInstructions]\n    -- , [o].[InternalComments]\n    , [o].[PickingCompletedWhen] AS [o_PickingCompletedWhend]\n    , [o].[LastEditedBy] AS [o_LastEditedBy]\n    , [o].[LastEditedWhen] AS [o_LastEditedWhen]\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.OrderLines.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [ol] -- OrderLines\nJOIN\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.Orders.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [o] -- Orders\nON\n    [ol].[OrderID] = [o].[OrderID]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
