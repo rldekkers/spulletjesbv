@@ -1,0 +1,17 @@
+{
+	"name": "create_ext_table_FactSales_NOTFINISHED",
+	"properties": {
+		"content": {
+			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL TABLE [dbo].[FactSales]\n(\n\t [Id] INT\n\t -- needs columns here\n)\nWITH\n(\n\tLOCATION = '/FactSales',\n\tDATA_SOURCE = [GoldLayer],\n\tFILE_FORMAT = [ParquetFormat]\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
