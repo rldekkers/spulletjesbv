@@ -1489,7 +1489,30 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/create_external_data_source')]",
+			"name": "[concat(parameters('workspaceName'), '/create_ext_data_source_GoldLayer')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "datawarehouse_DDL_scripts"
+				},
+				"content": {
+					"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL DATA SOURCE [GoldLayer] WITH (\n\tLOCATION = 'abfss://fsspul1234@dlsspul1234.dfs.core.windows.net/gold/'\n)\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "spulletjes_DW",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/create_ext_data_source_SilverLayer')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
