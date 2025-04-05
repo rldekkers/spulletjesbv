@@ -2,7 +2,7 @@
 	"name": "create_external_data_source",
 	"properties": {
 		"folder": {
-			"name": "dwh_setup"
+			"name": "datawarehouse_DDL_scripts"
 		},
 		"content": {
 			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL DATA SOURCE SilverLayer WITH (\n    LOCATION = 'abfss://fsspul1234@dlsspul1234.dfs.core.windows.net/silver/'\n)",
