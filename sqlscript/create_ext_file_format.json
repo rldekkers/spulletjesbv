@@ -1,5 +1,5 @@
 {
-	"name": "create_external_file_format",
+	"name": "create_ext_file_format",
 	"properties": {
 		"folder": {
 			"name": "datawarehouse_DDL_scripts"
