@@ -1,0 +1,17 @@
+{
+	"name": "create_ext_data_source_GoldLayer",
+	"properties": {
+		"content": {
+			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL DATA SOURCE [GoldLayer] WITH (\n\tLOCATION = 'abfss://fsspul1234@dlsspul1234.dfs.core.windows.net/gold/'\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"name": "create_external_data_source",
+	"name": "create_ext_data_source_SilverLayer",
 	"properties": {
 		"folder": {
 			"name": "datawarehouse_DDL_scripts"
