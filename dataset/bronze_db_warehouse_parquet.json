@@ -22,7 +22,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": "bronze/databases/warehouse",
+				"folderPath": "bronze/databases/Warehouse",
 				"fileSystem": "fsspul1234"
 			},
 			"compressionCodec": "none"
