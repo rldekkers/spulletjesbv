@@ -1558,12 +1558,15 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/create_ext_table_FactSales_NOTFINISHED')]",
+			"name": "[concat(parameters('workspaceName'), '/create_ext_tables')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"folder": {
+					"name": "datawarehouse_DDL_scripts"
+				},
 				"content": {
-					"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL TABLE dbo.FactSales\nWITH\n(\n\tLOCATION = '/FactSales',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_FactSales\n\n",
+					"query": "/*\nExternal table definitions for...\n- dbo.FactSales\n- dbo.DimDate\n- dbo.DimItem\n- dbo.DimSalesPerson\n- dbo.DimCustomer\n*/\n\n\nUSE [spulletjes_DW]\nGO\n\nCREATE EXTERNAL TABLE dbo.FactSales\nWITH\n(\n\tLOCATION = '/FactSales',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_FactSales\n\n\n/*\n\n-- does DimDate require different logic because we will populate it with a stand-alone script?\nCREATE EXTERNAL TABLE dbo.DimDate\nWITH\n(\n\tLOCATION = '/DimDate',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM ...\n\n\nCREATE EXTERNAL TABLE dbo.DimItem\nWITH\n(\n\tLOCATION = '/DimItem',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM ...\n\n\nCREATE EXTERNAL TABLE dbo.DimSalesPerson\nWITH\n(\n\tLOCATION = '/DimSalesPerson',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM ...\n\n\nCREATE EXTERNAL TABLE dbo.DimCustomer\nWITH\n(\n\tLOCATION = '/DimCustomer',\n\tDATA_SOURCE = GoldLayer,\n\tFILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM ...\n\n\n*/",
 					"metadata": {
 						"language": "sql"
 					},
@@ -1578,7 +1581,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/create_view_FactSales')]",
+			"name": "[concat(parameters('workspaceName'), '/create_views')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -1586,7 +1589,7 @@
 					"name": "datawarehouse_DDL_scripts"
 				},
 				"content": {
-					"query": "USE [spulletjes_DW]\nGO\n\nCREATE OR ALTER VIEW vw_FactSales AS\nSELECT\n    ol.OrderLineID AS OrderLineID-- included for source traceability\n    , ol.OrderID AS OrderID  -- included for source traceability\n    , StockItemID\n    -- , ol.Description -- found in DimStockItem as column 'StockItemName'\n    -- , ol.PackageTypeID\n    , Quantity\n    , UnitPrice\n    , TaxRate\n    , PickedQuantity\n    -- , ol.PickingCompletedWhen AS orderLine_PickingCompletedWhen\n    , ol.LastEditedBy AS orderLine_LastEditedBy\n    , ol.LastEditedWhen AS orderLine_LastEditedWhen\n\n    , CustomerID\n    , SalespersonPersonID\n    -- , PickedByPersonID\n    -- , ContactPersonID\n    -- , BackorderOrderID\n    , YEAR(o.OrderDate) * 10000 + MONTH(o.OrderDate) * 100 + DAY(OrderDate) AS OrderDateKey\n    -- , ExpectedDeliveryDate\n    -- , CustomerPurchaseOrderNumber\n    -- , IsUndersupplyBackordered\n    -- , Comments\n    -- , DeliveryInstructions\n    -- , InternalComments\n    -- , o.PickingCompletedWhen AS order_PickingCompletedWhend\n    , o.LastEditedBy AS order_LastEditedBy\n    , o.LastEditedWhen AS order_LastEditedWhen\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.OrderLines.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [ol] -- OrderLines\nJOIN\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.Orders.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [o] -- Orders\nON\n    [ol].[OrderID] = [o].[OrderID]",
+					"query": "/*\nView definitions for...\n- dbo.FactSales\n- dbo.DimDate -- or maybe not this one because it will be generated?\n- dbo.DimItem\n- dbo.DimSalesPerson\n- dbo.DimCustomer\n*/\n\nUSE [spulletjes_DW]\nGO\n\nCREATE OR ALTER VIEW vw_FactSales AS\nSELECT\n    ol.OrderLineID AS OrderLineID-- included for source traceability\n    , ol.OrderID AS OrderID  -- included for source traceability\n    , StockItemID\n    -- , ol.Description -- found in DimStockItem as column 'StockItemName'\n    -- , ol.PackageTypeID\n    , Quantity\n    , UnitPrice\n    , TaxRate\n    , PickedQuantity\n    -- , ol.PickingCompletedWhen AS orderLine_PickingCompletedWhen\n    , ol.LastEditedBy AS orderLine_LastEditedBy\n    , ol.LastEditedWhen AS orderLine_LastEditedWhen\n\n    , CustomerID\n    , SalespersonPersonID\n    -- , PickedByPersonID\n    -- , ContactPersonID\n    -- , BackorderOrderID\n    , YEAR(o.OrderDate) * 10000 + MONTH(o.OrderDate) * 100 + DAY(OrderDate) AS OrderDateKey\n    -- , ExpectedDeliveryDate\n    -- , CustomerPurchaseOrderNumber\n    -- , IsUndersupplyBackordered\n    -- , Comments\n    -- , DeliveryInstructions\n    -- , InternalComments\n    -- , o.PickingCompletedWhen AS order_PickingCompletedWhend\n    , o.LastEditedBy AS order_LastEditedBy\n    , o.LastEditedWhen AS order_LastEditedWhen\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.OrderLines.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [ol] -- OrderLines\nJOIN\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.Orders.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [o] -- Orders\nON\n    [ol].[OrderID] = [o].[OrderID]\n\n\n\n\n/*\n\nCREATE OR ALTER VIEW vw_DimItem AS\nSELECT\n    ...\nFROM\n    OPENROWSET(\n        -- volgende regel verwacht maar één file! Als een tabel uit meerdere files bestaat moeten we eigenlijk naar een folder wijzen.\n        -- dan moeten we één folder per tabel hebben (i.p.v. alle tabellen in een folder samen)\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/Warehouse/Warehouse.StockItems.parquet', \n        FORMAT = 'PARQUET'\n    ) AS [i] -- Items\n\n\nCREATE OR ALTER VIEW vw_DimSalesPerson AS\nSELECT\n    ...\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/csv/ApplicationPeopleSilver/*.parquet', -- check dit nog!\n        FORMAT = 'PARQUET'\n    ) AS [p] -- People\n\n\nCREATE OR ALTER VIEW vw_DimCustomer AS\nSELECT\n    ...\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/silver/databases/SalesPurchaseDB/Sales.Customer.paruqet', \n        FORMAT = 'PARQUET'\n    ) AS [p] -- People\n\n\n\n*/",
 					"metadata": {
 						"language": "sql"
 					},
@@ -1595,25 +1598,6 @@
 						"poolName": "Built-in"
 					},
 					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlsspul1234.dfs.core.windows.net/fsspul1234/gold/FactSales/91879234-5476-4729-AC6E-6E821915E7F6_59_0-1.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [result]\r\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"name": "master",
-						"type": "SqlOnDemand"
-					}
 				},
 				"type": "SqlQuery"
 			},
