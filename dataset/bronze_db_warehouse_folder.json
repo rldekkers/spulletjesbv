@@ -1,0 +1,24 @@
+{
+	"name": "bronze_db_warehouse_folder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapse-analytics-spul-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "databases"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "bronze/databases/Warehouse",
+				"fileSystem": "fsspul1234"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}
