@@ -100,13 +100,19 @@
 							"inputs": [
 								{
 									"referenceName": "bronze_db_warehouse_parquet",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": "@item().name"
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "bronze_db_warehouse_parquet",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": "@item().name"
+									}
 								}
 							]
 						},
