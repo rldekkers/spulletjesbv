@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "databases"
+			"name": "bronze/databases"
 		},
 		"annotations": [],
 		"type": "Parquet",

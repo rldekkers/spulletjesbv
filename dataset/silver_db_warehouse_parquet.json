@@ -11,7 +11,7 @@
 			}
 		},
 		"folder": {
-			"name": "databases"
+			"name": "silver/databases"
 		},
 		"annotations": [],
 		"type": "Parquet",
