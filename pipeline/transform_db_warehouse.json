@@ -109,7 +109,10 @@
 							"outputs": [
 								{
 									"referenceName": "silver_db_warehouse_parquet",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": "@item().name"
+									}
 								}
 							]
 						},
