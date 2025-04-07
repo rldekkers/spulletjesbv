@@ -108,11 +108,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "bronze_db_warehouse_parquet",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": "@item().name"
-									}
+									"referenceName": "silver_db_warehouse_parquet",
+									"type": "DatasetReference"
 								}
 							]
 						},
