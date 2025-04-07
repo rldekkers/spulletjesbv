@@ -599,7 +599,7 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "bronze_db_warehouse_parquet",
+											"referenceName": "silver_db_warehouse_parquet",
 											"type": "DatasetReference",
 											"parameters": {
 												"fileName": "@item().name"
@@ -645,7 +645,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/datasets/bronze_db_warehouse_folder')]",
-				"[concat(variables('workspaceId'), '/datasets/bronze_db_warehouse_parquet')]"
+				"[concat(variables('workspaceId'), '/datasets/bronze_db_warehouse_parquet')]",
+				"[concat(variables('workspaceId'), '/datasets/silver_db_warehouse_parquet')]"
 			]
 		},
 		{
@@ -1291,7 +1292,7 @@
 							"value": "@dataset().fileName",
 							"type": "Expression"
 						},
-						"folderPath": "bronze/databases/warehouse",
+						"folderPath": "bronze/databases/Warehouse",
 						"fileSystem": "fsspul1234"
 					},
 					"compressionCodec": "none"
@@ -1329,6 +1330,43 @@
 							"type": "Expression"
 						},
 						"folderPath": "silver/databases/SalesPurchaseDB",
+						"fileSystem": "fsspul1234"
+					},
+					"compressionCodec": "none"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapse-analytics-spul-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/silver_db_warehouse_parquet')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapse-analytics-spul-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "databases"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": "silver/databases/Warehouse",
 						"fileSystem": "fsspul1234"
 					},
 					"compressionCodec": "none"
