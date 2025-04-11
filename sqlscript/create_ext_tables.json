@@ -1,0 +1,20 @@
+{
+	"name": "create_ext_tables",
+	"properties": {
+		"folder": {
+			"name": "datawarehouse_DDL_scripts"
+		},
+		"content": {
+			"query": "/*\nExternal table definitions for...\n- dbo.FactSales\n- dbo.DimDate\n- dbo.DimItem\n- dbo.DimSalesPerson\n- dbo.DimCustomer\n*/\n\nUSE [spulletjes_DW]\nGO\n\nCREATE EXTERNAL TABLE dbo.FactSales\nWITH\n(\n    LOCATION = '/FactSales',\n    DATA_SOURCE = GoldLayer,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_FactSales\n\nGO\n\nCREATE EXTERNAL TABLE dbo.DimItem\nWITH\n(\n    LOCATION = '/DimItem',\n    DATA_SOURCE = GoldLayer,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_DimItem\n\nGO\n\n/*\nCREATE EXTERNAL TABLE dbo.DimSalesPerson\nWITH\n(\n    LOCATION = '/DimSalesPerson',\n    DATA_SOURCE = GoldLayer,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_DimSalesPerson\n*/\n\nCREATE EXTERNAL TABLE dbo.DimSalesPersonCurrent\nWITH\n(\n    LOCATION = '/DimSalesPersonCurrent',\n    DATA_SOURCE = GoldLayer,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_DimSalesPerson\n\nGO\n\nCREATE EXTERNAL TABLE dbo.DimCustomer\nWITH\n(\n    LOCATION = '/DimCustomer',\n    DATA_SOURCE = GoldLayer,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT *\nFROM dbo.vw_DimCustomer\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}

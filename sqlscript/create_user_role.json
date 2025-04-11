@@ -1,0 +1,20 @@
+{
+	"name": "create_user_role",
+	"properties": {
+		"folder": {
+			"name": "DCL_scripts"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\n\nCREATE USER [f0b97ac6-d4b2-4325-a1a7-1dd1c2a76971] FROM EXTERNAL PROVIDER;\nGO\n\nALTER ROLE db_datareader ADD MEMBER [f0b97ac6-d4b2-4325-a1a7-1dd1c2a76971];\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

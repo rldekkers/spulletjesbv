@@ -1,0 +1,33 @@
+{
+	"name": "bronze_db_salespurchasedb_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapse-analytics-spul-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "bronze/databases"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": "bronze/databases/SalesPurchaseDB",
+				"fileSystem": "fsspul1234"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

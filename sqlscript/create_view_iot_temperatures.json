@@ -1,0 +1,20 @@
+{
+	"name": "create_view_iot_temperatures",
+	"properties": {
+		"folder": {
+			"name": "IoT_DDL_scripts"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\nGO\n\nCREATE OR ALTER VIEW vw_IoT_Temperatures\nAS \nSELECT\n    JSON_VALUE(doc, '$.Body.time_stamp') AS Timestamp\n    , JSON_VALUE(doc, '$.Body.temperature') AS Temperature\nFROM OPENROWSET(\n    bulk 'abfss://fsspul1234@dlsspul1234.dfs.core.windows.net/iot-spul/*/*/*/*/*/*.json'\n    , format = 'csv'\n    , fieldterminator = '0x0b'\n    , fieldquote = '0x0b'\n    -- , rowterminator = '0x0b'\n) with (doc nvarchar(max)) as rows\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "spulletjes_DW",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

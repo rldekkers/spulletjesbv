@@ -1,0 +1,98 @@
+{
+	"name": "ApplicationPeopleDF",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ApplicationPeopleBronze",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ApplicationPeopleSilver",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "cast1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          PersonID as string,",
+				"          FullName as string,",
+				"          PreferredName as string,",
+				"          SearchName as string,",
+				"          IsPermittedToLogon as string,",
+				"          LogonName as string,",
+				"          IsExternalLogonProvider as string,",
+				"          HashedPassword as string,",
+				"          IsSystemUser as string,",
+				"          IsEmployee as string,",
+				"          IsSalesperson as string,",
+				"          UserPreferences as string,",
+				"          PhoneNumber as string,",
+				"          FaxNumber as string,",
+				"          EmailAddress as string,",
+				"          Photo as string,",
+				"          CustomFields as string,",
+				"          OtherLanguages as string,",
+				"          LastEditedBy as string,",
+				"          ValidFrom as string,",
+				"          ValidTo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"cast1 derive(DataSource = \"Application CSV folder\",",
+				"          TimestampOfLoading = currentTimestamp(),",
+				"          isActive = (ValidFrom <= currentTimestamp() && \r",
+				"(ValidTo >= currentTimestamp() || isNull(ValidTo)))) ~> derivedColumn1",
+				"source1 cast(output(",
+				"          PersonID as integer,",
+				"          FullName as string,",
+				"          PreferredName as string,",
+				"          SearchName as string,",
+				"          IsPermittedToLogon as boolean,",
+				"          LogonName as string,",
+				"          IsExternalLogonProvider as boolean,",
+				"          HashedPassword as string,",
+				"          IsSystemUser as boolean,",
+				"          IsEmployee as boolean,",
+				"          IsSalesperson as boolean,",
+				"          UserPreferences as string,",
+				"          PhoneNumber as string,",
+				"          FaxNumber as string,",
+				"          EmailAddress as string,",
+				"          Photo as string,",
+				"          CustomFields as string,",
+				"          OtherLanguages as string,",
+				"          LastEditedBy as integer,",
+				"          ValidFrom as timestamp,",
+				"          ValidTo as timestamp",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

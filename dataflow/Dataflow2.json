@@ -1,0 +1,48 @@
+{
+	"name": "Dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "BronzeCSV",
+						"type": "DatasetReference"
+					},
+					"name": "BronzeCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "SilverCSV"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CSVnewColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {CityID;CityName;StateProvinceID;Location;LatestRecordedPopulation;LastEditedBy;ValidFrom;ValidTo} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> BronzeCSV",
+				"BronzeCSV derive(dataSource = \"Application CSV folder\",",
+				"          DatetimeOfExtract = currentTimestamp()) ~> CSVnewColumns",
+				"CSVnewColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SilverCSV"
+			]
+		}
+	}
+}

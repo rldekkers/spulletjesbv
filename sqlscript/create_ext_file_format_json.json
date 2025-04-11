@@ -1,0 +1,20 @@
+{
+	"name": "create_ext_file_format_json",
+	"properties": {
+		"folder": {
+			"name": "IoT_DDL_scripts"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\n\nCREATE EXTERNAL FILE FORMAT JSONFormat\nWITH (\n    FORMAT_TYPE = JSON\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

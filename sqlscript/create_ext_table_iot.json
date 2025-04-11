@@ -1,0 +1,20 @@
+{
+	"name": "create_ext_table_iot",
+	"properties": {
+		"folder": {
+			"name": "IoT_DDL_scripts"
+		},
+		"content": {
+			"query": "USE [spulletjes_DW]\nGO\n\nCREATE EXTERNAL TABLE dbo.TemperatureRaspberry (\n    time_stamp DATETIME2,\n    temperature DECIMAL(3, 1)\n)\nWITH\n(\n    LOCATION = '/',\n    DATA_SOURCE = IoT_Folder,\n    FILE_FORMAT = JSONFormat\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
